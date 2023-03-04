@@ -21,6 +21,11 @@
   },
   "homepage": "https://github.com/shahmen2088/frontend-project-44#readme",
   "dependencies": {
+    "eslint-config-airbnb": "^19.0.4",
     "readline-sync": "^1.4.10"
+  },
+  "devDependencies": {
+    "eslint": "^8.35.0",
+    "eslint-plugin-jest": "^27.2.1"
   }
 }
