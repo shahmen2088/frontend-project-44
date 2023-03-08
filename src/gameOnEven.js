@@ -21,7 +21,7 @@ export default function isEvenOrOtherwise() {
     if (result === evenOrNo) {
       console.log(correctMessage);
     } else {
-      console.log(evenOrNo === answerYes ? `'${result}' ${errorMessage} '${answerYes}'` : `\${result}' ${errorMessage} '${answerNo}'`);
+      console.log(evenOrNo === answerYes ? `'${result}' ${errorMessage} '${answerYes}'` : `'${result}' ${errorMessage} '${answerNo}'`);
       console.log(tryMessage);
       break;
     }
