@@ -14,6 +14,7 @@ export default function universalMethod(nameGame, condition) {
   let randomOperation = 0;
   let firstNumber = 0;
   let secondNumber = 0;
+  let reminderOfDivision = -1;
 
   console.log(condition);
   for (let i = 0; i < 3; i += 1) {
@@ -49,6 +50,46 @@ export default function universalMethod(nameGame, condition) {
         randomValue = getRandomNumbers();
         result = readlineSync.question(`${'Question'}: ${randomValue}\n`).toLowerCase();
         correctlyAnswer = randomValue % 2 === 0 ? answerYes : answerNo;
+        answer = checkResult(result, correctlyAnswer, name);
+        break;
+      case 'NOD':
+        firstNumber = getRandomNumbers();
+        secondNumber = getRandomNumbers();
+        result = Number(readlineSync.question(`${'Question'}: ${firstNumber} ${secondNumber}`));
+        if (firstNumber === secondNumber) {
+          correctlyAnswer = firstNumber;
+          answer = checkResult(result, correctlyAnswer, name);
+          break;
+        } else if (firstNumber % secondNumber === 0) {
+          correctlyAnswer = secondNumber;
+          answer = checkResult(result, correctlyAnswer, name);
+          break;
+        } else if (secondNumber % firstNumber === 0) {
+          correctlyAnswer = firstNumber;
+          answer = checkResult(result, correctlyAnswer, name);
+          break;
+        }
+        if (firstNumber > secondNumber) {
+          while (reminderOfDivision !== 0) {
+            reminderOfDivision = firstNumber % secondNumber;
+            if (firstNumber % reminderOfDivision === 0 && secondNumber % reminderOfDivision === 0) {
+              correctlyAnswer = reminderOfDivision;
+              break;
+            }
+            firstNumber = secondNumber;
+            secondNumber = reminderOfDivision;
+          }
+        } else {
+          while (reminderOfDivision !== 0) {
+            reminderOfDivision = secondNumber % firstNumber;
+            if (firstNumber % reminderOfDivision === 0 && secondNumber % reminderOfDivision === 0) {
+              correctlyAnswer = reminderOfDivision;
+              break;
+            }
+            secondNumber = firstNumber;
+            firstNumber = reminderOfDivision;
+          }
+        }
         answer = checkResult(result, correctlyAnswer, name);
         break;
       default:
