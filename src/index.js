@@ -1,20 +1,48 @@
 import readlineSync from 'readline-sync';
 import isMethod from './cli.js';
 
+const getRandomNumbers = () => {
+  const maxValue = 100;
+  const minValue = 0;
+  return Math.round(Math.random() * (maxValue - minValue) + minValue);
+};
+
+const checkResult = (answer, correctlyAnswer, name) => {
+  const errorMessage = 'is wrong answer ;(. Correct answer was';
+  const tryMessage = `${'Let\'s try again'}, ${name}!`;
+  console.log(`${'Your answer'}: ${answer}`);
+  if (answer === correctlyAnswer) {
+    console.log('Correct!');
+    return 1;
+  }
+  console.log(`'${answer}' ${errorMessage} '${correctlyAnswer}'`);
+  console.log(tryMessage);
+  return -1;
+};
+
 export default function universalMethod(nameGame, condition) {
   const name = isMethod();
   const winMessage = 'Congratulations';
   const questionMessage = 'Question';
-  const answerYes = 'yes';
-  const answerNo = 'no';
-  let randomValue = 0;
   let result = 0;
   let correctlyAnswer = 0;
   let answer = 0;
+
+  /* Variables for parityCheck */
+  const answerYes = 'yes';
+  const answerNo = 'no';
+  let randomValue = 0;
+
+  /* Variables for calculator */
   let randomOperation = 0;
   let firstNumber = 0;
   let secondNumber = 0;
   let reminderOfDivision = -1;
+
+  /* Variables for gameProgression */
+  let countStep = 0;
+  const array = [];
+  let startStep = getRandomNumbers();
 
   console.log(condition);
   for (let i = 0; i < 3; i += 1) {
@@ -55,7 +83,7 @@ export default function universalMethod(nameGame, condition) {
       case 'NOD':
         firstNumber = getRandomNumbers();
         secondNumber = getRandomNumbers();
-        result = Number(readlineSync.question(`${'Question'}: ${firstNumber} ${secondNumber}`));
+        result = Number(readlineSync.question(`${'Question'}: ${firstNumber} ${secondNumber}\n`));
         if (firstNumber === secondNumber) {
           correctlyAnswer = firstNumber;
           answer = checkResult(result, correctlyAnswer, name);
@@ -92,6 +120,18 @@ export default function universalMethod(nameGame, condition) {
         }
         answer = checkResult(result, correctlyAnswer, name);
         break;
+      case 'progression':
+        countStep = Math.round(Math.random() * 10);
+        randomValue = Math.round(Math.random() * 9);
+        for (let j = 0; j < 10; j += 1) {
+          array[j] = startStep;
+          startStep += countStep;
+        }
+        correctlyAnswer = array[randomValue];
+        array[randomValue] = '..';
+        result = Number(readlineSync.question(`${'Question'}: ${array}\n`));
+        answer = checkResult(result, correctlyAnswer, name);
+        break;
       default:
         break;
     }
@@ -100,22 +140,3 @@ export default function universalMethod(nameGame, condition) {
     }
   }
 }
-
-const getRandomNumbers = () => {
-  const maxValue = 100;
-  const minValue = 0;
-  return Math.round(Math.random() * (maxValue - minValue) + minValue);
-};
-
-const checkResult = (answer, correctlyAnswer, name) => {
-  const errorMessage = 'is wrong answer ;(. Correct answer was';
-  const tryMessage = `${'Let\'s try again'}, ${name}!`;
-  console.log(`${'Your answer'}: ${answer}`);
-  if (answer === correctlyAnswer) {
-    console.log('Correct!');
-    return 1;
-  }
-  console.log(`'${answer}' ${errorMessage} '${correctlyAnswer}'`);
-  console.log(tryMessage);
-  return -1;
-};
