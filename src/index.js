@@ -27,6 +27,7 @@ export default function universalMethod(nameGame, condition) {
   let result = 0;
   let correctlyAnswer = 0;
   let answer = 0;
+  let count = 0;
 
   /* Variables for parityCheck */
   const answerYes = 'yes';
@@ -130,6 +131,24 @@ export default function universalMethod(nameGame, condition) {
         correctlyAnswer = array[randomValue];
         array[randomValue] = '..';
         result = Number(readlineSync.question(`${'Question'}: ${array}\n`));
+        answer = checkResult(result, correctlyAnswer, name);
+        break;
+      case 'prime':
+        randomValue = getRandomNumbers();
+        result = readlineSync.question(`${'Question'}: ${randomValue}\n`).toLowerCase();
+        count = 0;
+        if (randomValue % 1 === 0 && randomValue % randomValue === 0) {
+          count += 2;
+        }
+        for (let k = 2; k <= randomValue; k += 1) {
+          if (count === 2 && k === randomValue) {
+            correctlyAnswer = answerYes;
+            break;
+          } else if (randomValue % k === 0) {
+            count += 1;
+            correctlyAnswer = answerNo;
+          }
+        }
         answer = checkResult(result, correctlyAnswer, name);
         break;
       default:
