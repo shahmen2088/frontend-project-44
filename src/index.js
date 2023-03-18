@@ -41,21 +41,20 @@ function calculator(name, answer, correctlyAnswer) {
     case 0:
       correctlyAnswer = firstNumber + secondNumber;
       result = Number(readlineSync.question(`${questionMessage}: ${firstNumber} + ${secondNumber}\n`));
-      answer = checkResult(result, correctlyAnswer, name);
-      return answer;
+      break;
     case 1:
       correctlyAnswer = firstNumber - secondNumber;
       result = Number(readlineSync.question(`${questionMessage}: ${firstNumber} - ${secondNumber}\n`));
-      answer = checkResult(result, correctlyAnswer, name);
-      return answer;
+      break;
     case 2:
       correctlyAnswer = firstNumber * secondNumber;
       result = Number(readlineSync.question(`${questionMessage}: ${firstNumber} * ${secondNumber}\n`));
-      answer = checkResult(result, correctlyAnswer, name);
-      return answer;
+      break;
     default:
-      return answer;
+      break;
   }
+  answer = checkResult(result, correctlyAnswer, name);
+  return answer;
 }
 
 function parityCheck(name, answer, correctlyAnswer) {
@@ -70,7 +69,7 @@ function nod(name, answer, correctlyAnswer) {
   firstNumber = getRandomNumbers();
   secondNumber = getRandomNumbers();
   result = Number(readlineSync.question(`${'Question'}: ${firstNumber} ${secondNumber}\n`));
-  if (firstNumber === secondNumber) {
+  if (firstNumber === secondNumber || secondNumber % firstNumber === 0) {
     correctlyAnswer = firstNumber;
     answer = checkResult(result, correctlyAnswer, name);
     return answer;
@@ -80,13 +79,8 @@ function nod(name, answer, correctlyAnswer) {
     answer = checkResult(result, correctlyAnswer, name);
     return answer;
   }
-  if (secondNumber % firstNumber === 0) {
-    correctlyAnswer = firstNumber;
-    answer = checkResult(result, correctlyAnswer, name);
-    return answer;
-  }
-  if (firstNumber > secondNumber) {
-    while (reminderOfDivision !== 0) {
+  while (reminderOfDivision !== 0) {
+    if (firstNumber > secondNumber) {
       reminderOfDivision = firstNumber % secondNumber;
       if (firstNumber % reminderOfDivision === 0 && secondNumber % reminderOfDivision === 0) {
         correctlyAnswer = reminderOfDivision;
@@ -94,9 +88,7 @@ function nod(name, answer, correctlyAnswer) {
       }
       firstNumber = secondNumber;
       secondNumber = reminderOfDivision;
-    }
-  } else {
-    while (reminderOfDivision !== 0) {
+    } else {
       reminderOfDivision = secondNumber % firstNumber;
       if (firstNumber % reminderOfDivision === 0 && secondNumber % reminderOfDivision === 0) {
         correctlyAnswer = reminderOfDivision;
@@ -150,14 +142,13 @@ function prime(name, answer, correctlyAnswer) {
 }
 
 export default function universalMethod(nameGame, condition) {
+  const name = isMethod();
   let answer = 0;
   const correctlyAnswer = 0;
-  const name = isMethod();
   console.log(condition);
   for (let i = 0; i < 3; i += 1) {
-    if (answer === -1) {
+    if (answer === -1)
       break;
-    }
     switch (nameGame) {
       case 'calculator':
         answer = calculator(name, answer, correctlyAnswer);
@@ -177,8 +168,7 @@ export default function universalMethod(nameGame, condition) {
       default:
         break;
     }
-    if (i === 2 && answer !== -1) {
+    if (i === 2 && answer !== -1)
       console.log(`${winMessage}, ${name}!`);
-    }
   }
 }
