@@ -114,7 +114,7 @@ function progression(name, answer, correctlyAnswer) {
   }
   correctlyAnswer = array[randomValue];
   array[randomValue] = '..';
-  result = Number(readlineSync.question(`${'Question'}: ${array}\n`));
+  result = Number(readlineSync.question(`${'Question'}: ${array.join(' ')}\n`));
   answer = checkResult(result, correctlyAnswer, name);
   return answer;
 }
