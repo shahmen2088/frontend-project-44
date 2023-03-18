@@ -37,24 +37,23 @@ function checkResult(userAnswer, correctAnswer, name) {
 
 function calculator(name) {
   const randomOperation = Math.round(Math.random() * (2 - 0) + 0);
+  const arrayForOperations = ['+', '-', '*'];
   firstNumber = getRandomNumbers();
   secondNumber = getRandomNumbers();
   switch (randomOperation) {
     case 0:
       correctlyAnswer = firstNumber + secondNumber;
-      result = Number(readlineSync.question(`${questionMessage}: ${firstNumber} + ${secondNumber}\n`));
       break;
     case 1:
       correctlyAnswer = firstNumber - secondNumber;
-      result = Number(readlineSync.question(`${questionMessage}: ${firstNumber} - ${secondNumber}\n`));
       break;
     case 2:
       correctlyAnswer = firstNumber * secondNumber;
-      result = Number(readlineSync.question(`${questionMessage}: ${firstNumber} * ${secondNumber}\n`));
       break;
     default:
       break;
   }
+  result = Number(readlineSync.question(`${questionMessage}: ${firstNumber} ${arrayForOperations[randomOperation]} ${secondNumber}\n`));
   answer = checkResult(result, correctlyAnswer, name);
   return answer;
 }
@@ -82,23 +81,13 @@ function nod(name) {
     return answer;
   }
   while (reminderOfDivision !== 0) {
-    if (firstNumber > secondNumber) {
-      reminderOfDivision = firstNumber % secondNumber;
-      if (firstNumber % reminderOfDivision === 0 && secondNumber % reminderOfDivision === 0) {
-        correctlyAnswer = reminderOfDivision;
-        break;
-      }
-      firstNumber = secondNumber;
-      secondNumber = reminderOfDivision;
-    } else {
-      reminderOfDivision = secondNumber % firstNumber;
-      if (firstNumber % reminderOfDivision === 0 && secondNumber % reminderOfDivision === 0) {
-        correctlyAnswer = reminderOfDivision;
-        break;
-      }
-      secondNumber = firstNumber;
-      firstNumber = reminderOfDivision;
+    reminderOfDivision = firstNumber > secondNumber ? firstNumber % secondNumber : secondNumber % firstNumber;
+    if (firstNumber % reminderOfDivision === 0 && secondNumber % reminderOfDivision === 0) {
+      correctlyAnswer = reminderOfDivision;
+      break;
     }
+    firstNumber = secondNumber;
+    secondNumber = reminderOfDivision;
   }
   answer = checkResult(result, correctlyAnswer, name);
   return answer;
