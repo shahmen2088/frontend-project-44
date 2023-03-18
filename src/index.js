@@ -15,6 +15,8 @@ let firstNumber = 0;
 let secondNumber = 0;
 let randomValue = 0;
 let reminderOfDivision = -1;
+let answer;
+let correctlyAnswer;
 
 function getRandomNumbers() {
   const maxValue = 100;
@@ -22,18 +24,18 @@ function getRandomNumbers() {
   return Math.round(Math.random() * (maxValue - minValue) + minValue);
 }
 
-function checkResult(answer, correctlyAnswer, name) {
-  console.log(`${'Your answer'}: ${answer}`);
-  if (answer === correctlyAnswer) {
+function checkResult(userAnswer, correctAnswer, name) {
+  console.log(`${'Your answer'}: ${userAnswer}`);
+  if (userAnswer === correctAnswer) {
     console.log('Correct!');
     return 1;
   }
-  console.log(`'${answer}' ${errorMessage} '${correctlyAnswer}'`);
+  console.log(`'${userAnswer}' ${errorMessage} '${correctAnswer}'`);
   console.log(`${tryMessage}, ${name}!`);
   return -1;
 }
 
-function calculator(name, answer, correctlyAnswer) {
+function calculator(name) {
   const randomOperation = Math.round(Math.random() * (2 - 0) + 0);
   firstNumber = getRandomNumbers();
   secondNumber = getRandomNumbers();
@@ -57,7 +59,7 @@ function calculator(name, answer, correctlyAnswer) {
   return answer;
 }
 
-function parityCheck(name, answer, correctlyAnswer) {
+function parityCheck(name) {
   randomValue = getRandomNumbers();
   result = readlineSync.question(`${'Question'}: ${randomValue}\n`).toLowerCase();
   correctlyAnswer = randomValue % 2 === 0 ? answerYes : answerNo;
@@ -65,7 +67,7 @@ function parityCheck(name, answer, correctlyAnswer) {
   return answer;
 }
 
-function nod(name, answer, correctlyAnswer) {
+function nod(name) {
   firstNumber = getRandomNumbers();
   secondNumber = getRandomNumbers();
   result = Number(readlineSync.question(`${'Question'}: ${firstNumber} ${secondNumber}\n`));
@@ -102,7 +104,7 @@ function nod(name, answer, correctlyAnswer) {
   return answer;
 }
 
-function progression(name, answer, correctlyAnswer) {
+function progression(name) {
   let countStep = 0;
   const array = [];
   let startStep = getRandomNumbers();
@@ -119,7 +121,7 @@ function progression(name, answer, correctlyAnswer) {
   return answer;
 }
 
-function prime(name, answer, correctlyAnswer) {
+function prime(name) {
   let count = 0;
 
   randomValue = getRandomNumbers();
@@ -143,32 +145,28 @@ function prime(name, answer, correctlyAnswer) {
 
 export default function universalMethod(nameGame, condition) {
   const name = isMethod();
-  let answer = 0;
-  const correctlyAnswer = 0;
   console.log(condition);
   for (let i = 0; i < 3; i += 1) {
-    if (answer === -1)
-      break;
+    if (answer === -1) { break; }
     switch (nameGame) {
       case 'calculator':
-        answer = calculator(name, answer, correctlyAnswer);
+        answer = calculator(name);
         break;
       case 'parityCheck':
-        answer = parityCheck(name, answer, correctlyAnswer);
+        answer = parityCheck(name);
         break;
       case 'NOD':
-        answer = nod(name, answer, correctlyAnswer);
+        answer = nod(name);
         break;
       case 'progression':
-        answer = progression(name, answer, correctlyAnswer);
+        answer = progression(name);
         break;
       case 'prime':
-        answer = prime(name, answer, correctlyAnswer);
+        answer = prime(name);
         break;
       default:
         break;
     }
-    if (i === 2 && answer !== -1)
-      console.log(`${winMessage}, ${name}!`);
+    if (i === 2 && answer !== -1) { console.log(`${winMessage}, ${name}!`); }
   }
 }
