@@ -14,7 +14,7 @@ let result = 0;
 let firstNumber = 0;
 let secondNumber = 0;
 let randomValue = 0;
-let reminderOfDivision = -1;
+let reminder = -1;
 let answer;
 let correctlyAnswer;
 
@@ -80,14 +80,14 @@ function nod(name) {
     answer = checkResult(result, correctlyAnswer, name);
     return answer;
   }
-  while (reminderOfDivision !== 0) {
-    reminderOfDivision = firstNumber > secondNumber ? firstNumber % secondNumber : secondNumber % firstNumber;
-    if (firstNumber % reminderOfDivision === 0 && secondNumber % reminderOfDivision === 0) {
-      correctlyAnswer = reminderOfDivision;
+  while (reminder !== 0) {
+    reminder = firstNumber > secondNumber ? firstNumber % secondNumber : secondNumber % firstNumber;
+    if (firstNumber % reminder === 0 && secondNumber % reminder === 0) {
+      correctlyAnswer = reminder;
       break;
     }
     firstNumber = secondNumber;
-    secondNumber = reminderOfDivision;
+    secondNumber = reminder;
   }
   answer = checkResult(result, correctlyAnswer, name);
   return answer;
